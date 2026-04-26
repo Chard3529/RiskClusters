@@ -44,24 +44,41 @@ public class RiskGrid {
 
     // Is called by constructor creates a grid from lineStrings
     private static int[][] makeGridFromLineStrings(List<String> lineStrings) {
+        // If there is no string creates an empty matrix
         if (lineStrings.isEmpty()) {
+            System.out.print("Error creating grid, lineString is empty.");
             return new int[0][0];
         }
 
-        int n = lineStrings.size();
+        try {
+            int n = lineStrings.size();
+            int[][] grid = new int[n][n];
 
-        int[][] grid = new int[n][n];
-
-        for (int i = 0; i < n; i++) {
-            String[] cellStrings = lineStrings.get(i).split(" ");
-            
-            for (int j = 0; j < n; j++) {
-                int value = Integer.parseInt(cellStrings[j]);
-                grid[i][j] = value; 
+            for (int i = 0; i < n; i++) {
+                String[] cellStrings = lineStrings.get(i).split(" ");
+                if (cellStrings.length > n || cellStrings.length < n) {
+                    throw new IllegalArgumentException("File must contain a square NxN grid"); 
+                }
+                
+                for (int j = 0; j < n; j++) {
+                    int value = Integer.parseInt(cellStrings[j]);
+                    grid[i][j] = value;
+                }
             }
+            return grid;
+        
+        } 
+        // If provided file has anything else than numbers with spaces between them we get empty array
+        catch (NumberFormatException e) {
+            System.out.print("Could not parse number " + e.getMessage() + "\n");
+            return new int[0][0];
+        }
+        // If the grid is not NxN this is thrown
+        catch (IllegalArgumentException e) {
+            System.out.print(e.getMessage() + "\n");
+            return new int[0][0];
         }
 
-        return grid;
     };
 
     // Is called by constructor. Calls the bellow function for every single index in the grid. 
@@ -69,17 +86,21 @@ public class RiskGrid {
         ArrayList<Cluster> clusters = new ArrayList<>();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid.length; j++) {
-                clusters.addAll(createClustersFromIndex(i,j, clusterSize));
+                clusters.addAll(createClustersFromIndex(i,j));
             }
         }
 
+        // Sorts clusters according to the given criteria 
+        // using the compareTo method found in the cluster class.
         clusters.sort(null);
+        
         return clusters;
     }
 
 
-    // Returns a list of all clusters from given indices 
-    private ArrayList<Cluster> createClustersFromIndex(int row, int col, int clusterSize) {
+    // Returns a list of all clusters that can be formed from a given index.
+    // Using the clusterSize variable 
+    private ArrayList<Cluster> createClustersFromIndex(int row, int col) {
 
         ArrayList<Cluster> clusters = new ArrayList<>();
 
