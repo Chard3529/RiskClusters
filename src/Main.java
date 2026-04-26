@@ -11,9 +11,8 @@ import java.nio.file.Path;
 
 // Util
 import java.util.List;
-import java.util.ArrayList;
 
-
+import src.modules.Cluster;
 // Local modules:
 import src.modules.RiskGrid;
 
@@ -40,12 +39,16 @@ public class Main {
     public static void main(String[] args) {
 
     
-        List<String> lineStrings = readFile(args[0]);
-        
+        // List<String> lineStrings = readFile(args[0]);
+        List<String> lineStrings = readFile("testgrid.txt");
 
         RiskGrid rGrid = new RiskGrid(lineStrings);
-        System.out.print(rGrid);
+        
+        List<Cluster> clusters = rGrid.createClustersFromIndex(1, 1);
 
+        for (Cluster c : clusters){
+            System.out.print(c);
+        }
         
     }
 }
