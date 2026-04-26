@@ -46,13 +46,15 @@ public class InputHandler {
         String fname = args[0];
         if (!fname.matches(regex)) throw new IllegalArgumentException("Must provide a filename ending in \".txt\"!");
 
+        // if no errors are thrown, filename is considered valid and stored
         this.filename = fname;
-
 
         // If there are two arguments the second one is clusterSize
         if (args.length == 2) {
             try {
+                if (clusterSize == 0)
                 this.clusterSize = Integer.parseInt(args[1]);
+                throw new IllegalArgumentException("Cluster size must be larger than 0");
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Invalid input for clusterSize: " + args[1]);
             }
