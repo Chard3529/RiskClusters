@@ -28,16 +28,7 @@ public class Main {
     
         RiskGrid rGrid = new RiskGrid(lineStrings, clustersize);
 
-        List<Cluster> allClusters = rGrid.getAllClusters();
-        List<Cluster> significantClusters = rGrid.getSignificantClusters();
-
-
-        for (Cluster c : significantClusters) {
-            System.out.println(c);
-        }
-
-        System.out.println("Total clusters: " + allClusters.size());
-        System.out.println("Significant Clusters: " + significantClusters.size());
+        rGrid.printSignificantClusters();
 
     }
 }

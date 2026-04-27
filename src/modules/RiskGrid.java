@@ -32,6 +32,18 @@ public class RiskGrid {
         return significantClusters;
     }
 
+    public void printSignificantClusters() {
+        int significantClustersAmount = 0;
+        for (Cluster c : clusters) {
+            if (c.isSignificant()) {
+                significantClustersAmount += 1;
+                System.out.println(c);
+            }
+        }
+        System.out.println("Total Clusters: " + clusters.size());
+        System.out.println("Significant Clusters: " + significantClustersAmount);
+    }
+
 
     // Constructor, calls makeGridFromLineStrings function to set the grid,
     // as well as createClustersFromGrid function to set the clusters array
