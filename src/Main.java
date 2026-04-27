@@ -1,12 +1,8 @@
 package src;
 
 import java.util.List;
-
 import src.modules.RiskGrid;
-import src.modules.Cluster;
 import src.util.InputHandler;
-
-
 
 public class Main {
     
